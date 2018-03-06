@@ -31,16 +31,6 @@
 			`(let ((,first-arg ,first-val)) ,(let*->let rest-args rest-vals body)  ))))))
 
 
-#|  (define del (lambda(V L) 				;input:string,list expression ;output:list without the string and also flattens every appearence.
-   (cond ((null? L) L)
-         ((and (list? (car L))  (equal? V (caar L)))
-          (append (del V (car L)) (del V (cdr L))))
- 		((and (list? (car L))  (not (equal? V (caar L))))
-          (cons (del V (car L)) (del V (cdr L))))
-         ((equal? V (car L)) (del V (cdr L)))
-         (else (cons (car L) (del V (cdr L))))))) |#
-
-
 (define del (lambda(V L) 				;input:string,list expression ;output:list without the string and also flattens every appearence.
   (cond ((null? L) L)
         ((and (list? (car L))  (equal? V (caar L)))
@@ -118,10 +108,8 @@
   						(let ((args (map (lambda(x)(car x)) (cadr sexp)))
   							  (vals (map (lambda(x)(cadr x)) (cadr sexp)))
   							  (body (cddr sexp)))
-  							  ;(display args)(newline)(display vals)(newline)(display body)(newline)
   							(if  (check-duplicates args) "ERROR"			
   							(parse-loop `((lambda  ,args ,@body) ,@vals)))
-  							;`(define ,(parse-loop (cadr sexp)),(if(and(pair? (cddr sexp))(= (length(cddr sexp)) 1))(parse-loop (caddr sexp))(list 'seq (map parse-loop (cddr sexp))) ))))
 
 						))
   					((eq? (car sexp) 'let*) 
@@ -129,7 +117,6 @@
   							  (vals (map (lambda(x)(cadr x)) (cadr sexp)))
   							  (body (cddr sexp)))
 
-  							  ; (display args)(newline)(display vals)(newline)(display body)(newline)
   							  (parse-loop (let*->let args vals body))
   					))
   					((eq? (car sexp) 'letrec) 
@@ -137,18 +124,13 @@
   							  (vals (map (lambda(x)(cadr x)) (cadr sexp)))
   							  (body (cddr sexp)))
 
-  							  ; (display args)(newline)(display vals)(newline)(display body)(newline)
-
   							  (parse-loop `(let ,(map (lambda(arg) `(,arg #f))   args)  
   							  	,@(map (lambda(arg val) `(set! ,arg ,val))   args vals)
   							  	(let () ,@body )))
-  							  ; (parse-loop (let*->let args vals body))
 
   					))
   					((eq? (car sexp) 'begin) 
   							(let ((without (del 'begin sexp)))
-  								;(display without)
-  								;(newline)
   								(if(= (length without) 0) (list 'const (void))
   								(if(= (length without) 1)
   									 (parse-loop (car without))
