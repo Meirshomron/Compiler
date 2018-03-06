@@ -1064,7 +1064,6 @@ repair-stack1":\n"
       "ret\n"
 
       "apply_end:\n"
-      ; "mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'apply) "], rax\n\n")))
 
 
@@ -1098,7 +1097,6 @@ repair-stack1":\n"
       "ret\n"
 
       "not_end:\n"
-      ; "mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'not) "], rax\n\n")))
 
 (define impl-car
@@ -1123,17 +1121,10 @@ repair-stack1":\n"
       "car_finish:\n"
 
       "mov r14,rax\n"
-      ;"mov rdi, 8\n"
-      ;"call malloc\n"
-      ;"test rax, rax\n"
-      ; "mov rdx, rax\n\n"
-      ;"mov qword[rax] , r14\n"
-
       "leave\n"
       "ret\n"
 
       "car_end:\n"
-      ; "mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'car) "], rax\n\n"))) 
 
 (define impl-string-len
@@ -1170,7 +1161,6 @@ repair-stack1":\n"
       "ret\n"
 
       "string_len_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'string-length) "], rax\n\n")))
 
 (define impl-vector-len
@@ -1207,7 +1197,6 @@ repair-stack1":\n"
       "ret\n"
 
       "vector_len_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'vector-length) "], rax\n\n")))
 
 (define impl-string-ref
@@ -1243,14 +1232,12 @@ repair-stack1":\n"
       "mov rdi, 8\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov qword[rax] , r14\n"
 
       "leave\n"
       "ret\n"
 
       "string_ref_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'string-ref) "], rax\n\n")))
 
 (define impl-vector-ref
@@ -1276,19 +1263,12 @@ repair-stack1":\n"
 
       "mov rbx,0\n"
       "VECTOR_REF2 rbx, r14, r13\n"
-
-      ;"mov r14,rbx\n"
-      ;"mov rdi, 8\n"
-      ;"call malloc\n"
-      ;"test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov rax , rbx\n"
 
       "leave\n"
       "ret\n"
 
       "vector_ref_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'vector-ref) "], rax\n\n")))
 
 (define impl-cdr
@@ -1311,19 +1291,10 @@ repair-stack1":\n"
       "TRY2 r14\n"
       "mov rax,r14\n"
       "cdr_finish:\n"
-
-      ;"mov r14,rax\n"
-      ;"mov rdi, 8\n"
-      ;"call malloc\n"
-      ;"test rax, rax\n"
-      ; "mov rdx, rax\n\n"
-      ;"mov qword[rax] , r14\n"
-
       "leave\n"
       "ret\n"
 
       "cdr_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'cdr) "], rax\n\n")))
 
 (define impl-is-zero
@@ -1357,7 +1328,6 @@ repair-stack1":\n"
       "ret\n"
 
       "is_zero_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'zero?) "], rax\n\n")))
 
 (define impl-is-integer
@@ -1391,7 +1361,6 @@ repair-stack1":\n"
       "ret\n"
 
       "is_integer_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'integer?) "], rax\n\n")))
 
 (define impl-is-string
@@ -1428,7 +1397,6 @@ repair-stack1":\n"
       "ret\n"
 
       "is_string_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'string?) "], rax\n\n")))
 
 (define impl-is-symbol
@@ -1465,7 +1433,6 @@ repair-stack1":\n"
       "ret\n"
 
       "is_symbol_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'symbol?) "], rax\n\n")))
 
 (define impl-is-proc
@@ -1502,7 +1469,6 @@ repair-stack1":\n"
       "ret\n"
 
       "is_proc_end:\n"
-     ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'procedure?) "], rax\n\n")))
 
 (define impl-is-vector
@@ -1539,7 +1505,6 @@ repair-stack1":\n"
       "ret\n"
 
       "is_vector_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'vector?) "], rax\n\n")))
 
 (define impl-is-boolean
@@ -1576,7 +1541,6 @@ repair-stack1":\n"
       "ret\n"
 
       "is_boolean_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'boolean?) "], rax\n\n")))
 
 (define impl-is-pair
@@ -1613,7 +1577,6 @@ repair-stack1":\n"
       "ret\n"
 
       "is_pair_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'pair?) "], rax\n\n")))
 
 (define impl-is-char
@@ -1649,7 +1612,6 @@ repair-stack1":\n"
       "ret\n"
 
       "is_char_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'char?) "], rax\n\n")))
 
 (define impl-is-null
@@ -1686,7 +1648,6 @@ repair-stack1":\n"
       "ret\n"
 
       "is_null_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'null?) "], rax\n\n")))
 
 (define impl-is-num
@@ -1726,7 +1687,6 @@ repair-stack1":\n"
       "ret\n"
 
       "is_num_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'number?) "], rax\n\n")))
 
 (define impl-is-rational
@@ -1766,7 +1726,6 @@ repair-stack1":\n"
       "ret\n"
 
       "is_rational_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'rational?) "], rax\n\n")))
 
 (define impl-remainder
@@ -1794,7 +1753,6 @@ repair-stack1":\n"
       "DATA_LOWER r8\n" ;DATA_LOWER = the actual numbers without the type
       "DATA_LOWER r9\n"
 
-
       "xor rdx, rdx \n"
       "mov rax, r9\n"
       "cqo\n"
@@ -1809,7 +1767,6 @@ repair-stack1":\n"
       "mov rdi, 8\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov qword[rax] , r14\n"
 
 
@@ -1817,7 +1774,6 @@ repair-stack1":\n"
       "ret\n"
 
       "remainder_end:\n"
-     ; "mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'remainder) "], rax\n\n")))
 
 (define impl-set-car!
@@ -1861,7 +1817,6 @@ repair-stack1":\n"
       "ret\n"
 
       "set_car_end:\n"
-     ; "mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'set-car!) "], rax\n\n")))
 
 (define impl-set-cdr!
@@ -1905,7 +1860,6 @@ repair-stack1":\n"
       "ret\n"
 
       "set_cdr_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'set-cdr!) "], rax\n\n")))
 
 (define impl-make-string 
@@ -1967,7 +1921,6 @@ repair-stack1":\n"
       "ret\n"
 
       "make_string_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'make-string) "], rax\n\n")))
 
 (define impl-string-set!
@@ -2030,16 +1983,11 @@ repair-stack1":\n"
       "string_set_finish:\n"
        "mov r14,[rbp+8*(4+0)]\n" 
        "mov [r14],rax\n"
-      ; "mov rdi, 8\n"
-      ; "call malloc\n"
-      ; "test rax, rax\n"
-      ; "mov qword[rax] , r14\n"
       "mov rax," (find-label const-list (void))"\n"
       "leave\n"
       "ret\n"
 
       "string_set_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'string-set!) "], rax\n\n")))
 
 (define impl-make-vector 
@@ -2108,7 +2056,6 @@ repair-stack1":\n"
       "ret\n"
 
       "make_vector_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'make-vector) "], rax\n\n")))
 
 (define impl-vector-set!
@@ -2161,12 +2108,6 @@ repair-stack1":\n"
       "mov rbx,0\n"
       "VECTOR_REF2 rbx, r10, r9\n"
 
-      ; "mov rdi, 8\n"
-      ; "call malloc\n"
-      ; "test rax, rax\n"
-      ; "mov [rax],rbx\n"
-      ; "mov rbx,rax\n"
-
       "mov [r8+r12],rbx\n"  ;fill r8/rax with  char from string
       "jmp vector_set_continue_loop\n"
       "vector_set_change:\n"
@@ -2183,11 +2124,6 @@ repair-stack1":\n"
       "vector_set_finish:\n"
       "mov r14,[rbp+8*(4+0)]\n" 
       "mov [r14],r8\n"
-      ; "mov r14,r8\n"
-      ; "mov rdi, 8\n"
-      ; "call malloc\n"
-      ; "test rax, rax\n"
-      ; "mov qword[rax] , r14\n"
       "mov rax," (find-label const-list (void))"\n"
       "leave\n"
       "ret\n"
@@ -2248,172 +2184,7 @@ repair-stack1":\n"
       "ret\n"
 
       "vector_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'vector) "], rax\n\n")))
-
-; (define impl-numerator 
-;   (lambda ()
-;     (string-append
-;       "mov rbp,rsp\n"
-;       "mov rdi, 16\n"
-;       "call malloc\n"
-;       "mov rbx, 1\n"
-;       "MAKE_LITERAL_CLOSURE rax, rbx, numerator_code\n"
-;       "jmp numerator_end\n"
-
-;       "numerator_code:\n\n"
-;       "push rbp\n"
-;       "mov rbp,rsp\n"
-;       "mov r14,[rbp+8*(4+0)]\n" ;arg 
-;       "mov r14,[r14]\n"
-;       "mov r15,[rbp+8*(3+0)]\n" ;arg count
-
-;       "mov rax, r14\n"
-;       "mov r13, r14 \n"
-;       "TYPE r13\n"
-;       "cmp r13, T_INTEGER\n " ;if it's an integer then return the integer
-;       "je numerator_finish\n"
-
-;       ;it's a fraction so: 1.we minimize it.
-;       "DENOMINATOR rax\n"
-;       "mov r11,rax\n"      ;r11 hold the DENOMINATOR of r14
-;       "DATA_LOWER r11\n"
-;       "NUMERATOR r14\n"        
-;       "mov r13,rax\n"      ;r13 holds the NUMERATOR  of r14
-;       "sar r13,4\n"
-
-;       "push r11\n"
-;       "push r12\n"
-;       "push r13\n"  ;saving before doing call to gdc
-;       "push r14\n"
-;       "push r15\n"
-
-;       "shl r11,4\n"
-;       "add r11, T_INTEGER\n"
-;       "shl r13,4\n"
-;       "add r13, T_INTEGER\n"
-;       "push r11\n"
-;       "push r13\n"         
-;       "push 2\n"
-;         "mov rax, ["(find-label fvar-list 'gcd)"]\n"
-;       "mov rbx,rax\n"
-;       "CLOSURE_ENV rbx\n"
-;       "push rbx\n"
-;       "CLOSURE_CODE rax\n"
-;       "call rax\n"
-;       "add rsp,4*8\n"   ;rax holds gcd of the denominators a & b
-;       "pop r15\n"
-;       "pop r14\n"
-;       "pop r13\n"
-;       "pop r12\n"
-;       "pop r11\n"
-
-;       "shr rax,4\n"
-;       "mov r10,rax\n"   ;r[10] = gcd(a,b) = gcd(numerator(r14),denominator(r14))
-;       "mov rax,r13\n"   ;rax holds the nominator
-;       "div r10\n"       ;rax = nominator / gcd(a,b)
-;       "shl rax,4\n"
-;       "add rax, T_INTEGER\n"
-
-;       "numerator_finish:\n"
-;       "mov r14,rax\n"
-;       "mov rdi, 8\n"
-;       "call malloc\n"
-;       "test rax, rax\n"
-;       ; "mov rdx, rax\n\n"
-;       "mov qword[rax] , r14\n"
-
-
-;       "leave\n"
-;       "ret\n"
-
-;       "numerator_end:\n"
-;       ;"mov rax,[rax]\n"
-;       "mov [" (find-label fvar-list 'numerator) "], rax\n\n")))
-
-; (define impl-denominator 
-;   (lambda ()
-;     (string-append
-;       "mov rbp,rsp\n"
-;       "mov rdi, 16\n"
-;       "call malloc\n"
-;       "mov rbx, 1\n"
-;       "MAKE_LITERAL_CLOSURE rax, rbx, denominator_code\n"
-;       "jmp denominator_end\n"
-
-;       "denominator_code:\n\n"
-;       "push rbp\n"
-;       "mov rbp,rsp\n"
-;       "mov r14,[rbp+8*(4+0)]\n" ;arg 
-;       "mov r14,[r14]\n"
-;       "mov r15,[rbp+8*(3+0)]\n" ;arg count
-      
-;       "mov rax,1\n"
-;       "shl rax,4\n"
-;       "add rax, T_INTEGER\n"
-
-;       "mov r13, r14 \n"
-;       "TYPE r13\n"
-;       "cmp r13, T_INTEGER\n " ;if it's an integer then return the integer
-;       "je denominator_finish\n"
-;       "mov rax, r14\n"
-
-;       ;it's a fraction so: 1.we minimize it.
-;       "DENOMINATOR rax\n"
-;       "mov r11,rax\n"      ;r11 hold the DENOMINATOR of r14
-;       "DATA_LOWER r11\n"
-;       "NUMERATOR r14\n"        
-;       "mov r13,rax\n"      ;r13 holds the NUMERATOR  of r14
-;       "sar r13,4\n"
-
-;       "push r11\n"
-;       "push r12\n"
-;       "push r13\n"  ;saving before doing call to gdc
-;       "push r14\n"
-;       "push r15\n"
-
-;       "shl r11,4\n"
-;       "add r11, T_INTEGER\n"
-;       "shl r13,4\n"
-;       "add r13, T_INTEGER\n"
-;       "push r11\n"
-;       "push r13\n"         
-;       "push 2\n"
-;       "mov rax, ["(find-label fvar-list 'gcd)"]\n"
-;       "mov rbx,rax\n"
-;       "CLOSURE_ENV rbx\n"
-;       "push rbx\n"
-;       "CLOSURE_CODE rax\n"
-;       "call rax\n"
-;       "add rsp,4*8\n"   ;rax holds gcd of the denominators a & b
-;       "pop r15\n"
-;       "pop r14\n"
-;       "pop r13\n"
-;       "pop r12\n"
-;       "pop r11\n"
-
-;       "shr rax,4\n"
-;       "mov r10,rax\n"   
-;       "mov rax,r11\n"   ;rax holds the denominator
-;       "div r10\n"       ;rax = denominator / gcd(a,b)
-;       "shl rax,4\n"
-;       "add rax, T_INTEGER\n"
-
-;       "denominator_finish:\n"
-;       "mov r14,rax\n"
-;       "mov rdi, 8\n"
-;       "call malloc\n"
-;       "test rax, rax\n"
-;       ; "mov rdx, rax\n\n"
-;       "mov qword[rax] , r14\n"
-
-
-;       "leave\n"
-;       "ret\n"
-
-;       "denominator_end:\n"
-;       ;"mov rax,[rax]\n"
-;       "mov [" (find-label fvar-list 'denominator) "], rax\n\n")))
 
 (define impl-smaller
   (lambda ()
@@ -2504,7 +2275,6 @@ repair-stack1":\n"
       "ret\n"
 
       "less_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list '<) "], rax\n\n")))
 
 (define impl-larger
@@ -2596,7 +2366,6 @@ repair-stack1":\n"
       "ret\n"
 
       "larger_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list '>) "], rax\n\n")))
 
 (define impl-equal
@@ -2686,13 +2455,10 @@ repair-stack1":\n"
 
       "equal_finish:\n"
 
-
-
       "leave\n"
       "ret\n"
 
       "equal_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list '=) "], rax\n\n")))
 
 (define impl-is_eq
@@ -2727,7 +2493,6 @@ repair-stack1":\n"
       "ret\n"
 
       "is_eq_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'eq?) "], rax\n\n")))
 
 (define impl-numerator 
@@ -2800,15 +2565,12 @@ repair-stack1":\n"
       "mov rdi, 8\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov qword[rax] , r14\n"
-
 
       "leave\n"
       "ret\n"
 
       "numerator_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'numerator) "], rax\n\n")))
 
 (define impl-denominator 
@@ -2885,7 +2647,6 @@ repair-stack1":\n"
       "mov rdi, 8\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov qword[rax] , r14\n"
 
 
@@ -2893,7 +2654,6 @@ repair-stack1":\n"
       "ret\n"
 
       "denominator_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'denominator) "], rax\n\n")))
 
 (define impl-gcd  ;it's called after pushing values and not addresses.
@@ -3087,7 +2847,6 @@ repair-stack1":\n"
       "shl r13,4\n"
       "add r13, T_INTEGER\n"
 
-
       "mov rdi, 16\n"
       "call malloc\n"
       "test rax, rax\n"
@@ -3103,7 +2862,6 @@ repair-stack1":\n"
       "inc r12\n"   
       "jmp plus_loop\n"
 
-
       "plus_resIsInt:\n"
       "mov r14,rax\n"
       "shl r14,4\n"
@@ -3111,20 +2869,17 @@ repair-stack1":\n"
       "inc r12\n"   
       "jmp plus_loop\n"
 
-
       "plus_finish:\n"
 
       "mov rdi, 8\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov qword[rax] , r14\n"
 
       "leave\n"
       "ret\n"
 
       "plus_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list '+) "], rax\n\n")))
 
 (define impl-minus  ;does not do a minimum answer alway
@@ -3344,14 +3099,11 @@ repair-stack1":\n"
       "mov rdi, 8\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov qword[rax] , r14\n"
-      ;"mov rax,r14\n"
       "leave\n"
       "ret\n"
 
       "minus_end:\n"
-     ; "mov rax,[rax]\n"
       "mov [" (find-label fvar-list '-) "], rax\n\n")))
 
 (define impl-mult
@@ -3467,92 +3219,7 @@ repair-stack1":\n"
 
       "cmp r11,1\n"
       "je mult_resIsInt\n"
-
-
-    ;   "debug:\n"
-
-    ; "mov r8,r11\n" ;r8 holds the denominator 
-    ;   "mov r9,r13\n" ;r9 holds the numerator
-
-
-    ;   ;"mov r8,r11\n"
-    ;   ;"mov r9,r13\n"
-
-    ;   "push r11\n"
-    ;   "push r12\n"
-    ;   "push r13\n"  ;saving before doing call to gdc
-    ;   "push r14\n"
-    ;   "push r15\n"
-
-    ;   "shl r8,4\n"  ;we do gcd of the denominators
-    ;   "add r8, T_INTEGER\n"
-    ;   "shl r9,4\n"
-    ;   "add r9, T_INTEGER\n"
-    ;   "push r8\n"
-    ;   "push r9\n"         
-    ;   "push 2\n"
-    ;   "mov rax, ["(find-label fvar-list 'gcd)"]\n"
-    ;   "mov rbx,rax\n"
-    ;   "CLOSURE_ENV rbx\n"
-    ;   "push rbx\n"
-    ;   "CLOSURE_CODE rax\n"
-    ;   "call rax\n"
-    ;   "add rsp,4*8\n"   ;rax holds gcd of the denominators a & b
-    ;   "pop r15\n"
-    ;   "pop r14\n"
-    ;   "pop r13\n"
-    ;   "pop r12\n"
-    ;   "pop r11\n"
-
-    ;   "shr r8,4\n"
-    ;   "shr r9,4\n"
-    ;   "shr rax,4\n"
-
-    ;   "mov r10,rax\n"
-
-    ;   "mov rax,r9\n"
-    ;   "cqo\n"
-    ;   "idiv r10\n"
-    ;   "mov r13,rax\n"
-
-
-    ;   "mov rax,r8\n"
-    ;   "cqo\n"
-    ;   "idiv r10\n"
-    ;   "mov r11,rax\n"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+     
       "shl r13,4\n"
       "add r13, T_INTEGER\n"
       "shl r11,4\n"
@@ -3587,15 +3254,12 @@ repair-stack1":\n"
       "mov rdi, 8\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov qword[rax] , r14\n"
 
-      ;"mov rax,r14\n"
       "leave\n"
       "ret\n"
 
       "mult_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list '*) "], rax\n\n")))
 
 (define impl-divide
@@ -3791,878 +3455,13 @@ repair-stack1":\n"
       "mov rdi, 8\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov qword[rax] , r14\n"
 
-      ;"mov rax,r14\n"
       "leave\n"
       "ret\n"
 
       "divide_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list '/) "], rax\n\n")))
-; (define impl-gcd  ;it's called after pushing values and not addresses.
-;   (lambda ()
-;     (string-append
-;       "mov rbp,rsp\n"
-;       "mov rdi, 16\n"
-;       "call malloc\n"
-;       "mov rbx, 1\n"
-;       "MAKE_LITERAL_CLOSURE rax, rbx, gcd_code\n"
-;       "jmp gcd_end\n"
-
-;       "gcd_code:\n\n"
-;       "push rbp\n"
-;       "mov rbp,rsp\n"
-;       "mov rdi,1\n"
-;       "mov r13,[rbp+8*(5+0)]\n" ;arg 1 -b
-;       "mov r14,[rbp+8*(4+0)]\n" ;arg 0 -a 
-;       "mov r15,[rbp+8*(3+0)]\n" ;arg count
-;       "DATA_LOWER r13\n"
-;       "DATA_LOWER r14\n"
-
-;       "cmp r13,0\n"
-;       "jl mul_with_minus\n"
-
-;       ;"cmp r14,0\n"
-;       ;"jl mul_with_minus\n"
-;       "jmp gcd_loop\n"
-;       "mul_with_minus:\n"
-;       "mov rdi,-1\n"
-
-;       "gcd_loop:\n"
-;       "cmp r13,0\n"
-;       "je gcd_finish\n"
-
-;       "xor rdx,rdx\n"
-;       "mov r12, r14\n"
-;       "mov r14,r13\n"
-;       "mov rax,r12\n"
-;       "cqo\n"
-;       "idiv r13\n"
-;       "mov r13,rdx\n"
-;       "jmp gcd_loop\n"
-
-;       "gcd_finish:\n"
-;       "mov rax,r14\n"
-;       "imul rdi\n"
-;       "shl rax,4\n"
-;       "add rax, T_INTEGER\n"
-
-;       "leave\n"
-;       "ret\n"
-
-;       "gcd_end:\n"
-;       "mov rax,[rax]\n"
-;       "mov [" (find-label fvar-list 'gcd) "], rax\n\n")))
-
-; (define impl-plus
-;     (lambda ()
-;     (string-append
-;       "mov rbp,rsp\n"
-;       "mov rdi, 16\n"
-;       "call malloc\n"
-;       "mov rbx, 1\n"
-;       "MAKE_LITERAL_CLOSURE rax, rbx, plus_code\n"
-;       "jmp plus_end\n"
-
-;       "plus_code:\n\n"
-;       "push rbp\n"
-;       "mov rbp,rsp\n"
-;       "mov r12,0\n"
-;       "mov r14,0\n"   ;r14 holds the sum till now.
-;       "shl r14,4\n"
-;       "add r14, T_INTEGER\n"
-;       "mov r15,[rbp+8*(3+0)]\n" ;arg count
-
-;       "plus_loop:\n"
-
-;       "cmp r12,r15\n"
-;       "je plus_finish\n"
-
-;       "mov r13,[rbp+8*(4+r12)]\n" ;arg
-;       "mov r13,[r13]\n"
-
-;       "mov rdx,r14\n"
-;       "mov rcx,r13\n"
-;       "mov r8,1\n"
-;       "mov r9,1\n"
-;       "mov r10,r13\n"
-;       "mov r11,r14\n"
-;       "TYPE r10\n"
-;       "TYPE r11\n"
-;       "cmp r10, T_FRACTION\n"
-;       "je plus_splitNum2\n"
-      
-;       "plus_second:\n"
-;       "cmp r11, T_FRACTION\n"
-;       "je plus_splitNum1\n"
-;       "jmp plus_after\n"
-
-;       "plus_splitNum2:\n"
-;       "DENOMINATOR rcx\n"
-;       "mov r8,rax\n"      ;r8 hold the DENOMINATOR of r13
-;       "DATA_LOWER r8\n"
-;       "NUMERATOR r13\n"
-;       "mov r13,rax\n"
-;       "jmp plus_second\n"
-
-;       "plus_splitNum1:\n"
-;       "DENOMINATOR rdx\n"
-;       "mov r9,rax\n"      ;r9 hold the DENOMINATOR of r14
-;       "DATA_LOWER r9\n"
-;       "NUMERATOR r14\n"
-;       "mov r14,rax\n"
-
-;       "plus_after:\n"
-;       "shr r13,4\n"
-;       "shr r14,4\n"
-
-;       "push r12\n"
-;       "push r13\n"  ;saving before doing call to gdc
-;       "push r14\n"
-;       "push r15\n"
-
-;       "shl r8,4\n"
-;       "add r8, T_INTEGER\n"
-;       "shl r9,4\n"
-;       "add r9, T_INTEGER\n"
-;       "push r8\n"
-;       "push r9\n"         
-;       "push 2\n"
-;       "mov rax, ["(find-label fvar-list 'gcd)"]\n"
-;       "mov rbx,rax\n"
-;       "CLOSURE_ENV rbx\n"
-;       "push rbx\n"
-;       "CLOSURE_CODE rax\n"
-;       "call rax\n"
-;       "add rsp,4*8\n"   ;rax holds gcd of the denominators a & b
-;       "pop r15\n"
-;       "pop r14\n"
-;       "pop r13\n"
-;       "pop r12\n"
-
-;       "shr r8,4\n"
-;       "shr r9,4\n"
-;       "shr rax,4\n"
-
-;       "mov r10,rax\n"   ;r[10] = gcd(a,b)
-;       "mov rax, r8\n"     
-;       "mul r9\n"       ;rax = a*b 
-;       "div r10\n"       ;rax = a*b/gcd(a,b) = LCM
-;       "mov r11,rax\n"   ;r11 = LCM
-
-;       "idiv r8\n"
-;       "mul r13\n"
-;       "mov r13,rax\n" ;r13 = LCM/denominator(r13) * numerator(r13) 
-
-;       "mov rax,r11\n"
-;       "idiv r9\n"
-;       "mul r14\n"
-;       "mov r14,rax\n" ;r14 = LCM/denominator(r14) * numerator(r14) 
-
-;       "xor rdx,rdx\n"
-;       "add r13,r14\n"
-;       "mov rax, r13\n"
-;       "idiv r11\n"
-      
-;       "cmp rdx,0\n"
-;       "je plus_resIsInt\n"
-
-;       "mov r14,rdx\n"
-;       "mul r11\n"
-;       "add rax,r14\n"
-;       "mov r13,r11\n"   
-;       "mov r11,rax\n"  
-
-;       "shl r11,4\n"
-;       "add r11, T_INTEGER\n"
-;       "shl r13,4\n"
-;       "add r13, T_INTEGER\n"
-
-
-;       "mov rdi, 16\n"
-;       "call malloc\n"
-;       "test rax, rax\n"
-;       ; "mov rdx, rax\n\n"
-;       "mov qword[rax] , r11\n"
-;       "mov qword[rax+8] , r13\n"
-;       "mov r8, rax\n"
-;       "add rax, 8\n"
-;       "mov r13, rax\n"
-
-;       "MAKE_LITERAL_FRACTION2 r8 , r13\n"
-;       "mov r14,r8 \n"
-;       "inc r12\n"   
-;       "jmp plus_loop\n"
-
-
-;       "plus_resIsInt:\n"
-;       "mov r14,rax\n"
-;       "shl r14,4\n"
-;       "add r14, T_INTEGER\n"
-;       "inc r12\n"   
-;       "jmp plus_loop\n"
-
-
-;       "plus_finish:\n"
-
-;       "mov rdi, 8\n"
-;       "call malloc\n"
-;       "test rax, rax\n"
-;       ; "mov rdx, rax\n\n"
-;       "mov qword[rax] , r14\n"
-
-;       "leave\n"
-;       "ret\n"
-
-;       "plus_end:\n"
-;       ;"mov rax,[rax]\n"
-;       "mov [" (find-label fvar-list '+) "], rax\n\n")))
-
-; (define impl-minus  ;does not do a minimum answer alway
-;     (lambda ()
-;     (string-append
-;       "mov rbp,rsp\n"
-;       "mov rdi, 16\n"
-;       "call malloc\n"
-;       "mov rbx, 1\n"
-;       "MAKE_LITERAL_CLOSURE rax, rbx, minus_code\n"
-;       "jmp minus_end\n"
-
-;       "minus_code:\n\n"
-;       "push rbp\n"
-;       "mov rbp,rsp\n"
-;       "mov r12,0\n"
-;       "mov rsi,1\n"
-;       "mov r15,[rbp+8*(3+0)]\n" ;arg count
-;       "mov r14,[rbp+8*(4+r12)]\n" ;first arg
-;       "mov r14,[r14]\n"
-
-;       "minus_loop:\n"
-
-;       "cmp r12,r15\n" ;stop case for 1 arg only
-;       "je minus_finish\n"
-
-;       "cmp r15,1\n"
-;       "jne minus_next\n"
-
-;       "mov r13,[rbp+8*(4+r12)]\n" ;if there is only 1 arg then do 0-arg
-;       "mov r13,[r13]\n"
-;       "mov r14,T_INTEGER\n"
-;       "jmp minus_continue\n"
-
-;       "minus_next:\n"
-;       "cmp rsi,r15\n" ;stop case for when r15>1 
-;       "je minus_finish\n"
-
-;       "inc rsi\n"
-;       "mov r13,[rbp+8*(5+r12)]\n" ;r14 holds left arg and r13 hold right arg
-;       "mov r13,[r13]\n"
-
-;       "minus_continue:"
-;       "mov rdx,r14\n"
-;       "mov rcx,r13\n"
-;       "mov r8,1\n"  
-;       "mov r9,1\n"
-;       "mov r10,r13\n"
-;       "mov r11,r14\n"
-;       "TYPE r10\n"
-;       "TYPE r11\n"
-;       "cmp r10, T_FRACTION\n"
-;       "je minus_splitNum2\n"
-      
-;       "minus_second:\n" ;first we check both args to see if they are a fraction and need to be split
-;       "cmp r11, T_FRACTION\n"
-;       "je minus_splitNum1\n"
-;       "jmp minus_after\n"
-
-;       "minus_splitNum2:\n"
-;       "DENOMINATOR rcx\n"
-;       "mov r8,rax\n"      ;r8 hold the DENOMINATOR of r13
-;       "DATA_LOWER r8\n"
-;       "NUMERATOR r13\n"
-;       "mov r13,rax\n"
-;       "jmp minus_second\n"
-
-;       "minus_splitNum1:\n"
-;       "DENOMINATOR rdx\n"
-;       "mov r9,rax\n"      ;r9 hold the DENOMINATOR of r14
-;       "DATA_LOWER r9\n"
-;       "NUMERATOR r14\n"
-;       "mov r14,rax\n"
-
-;       "minus_after:\n"
-;       "shr r13,4\n"
-;       "shr r14,4\n"
-
-;       "push r12\n"
-;       "push r13\n"  ;saving before doing call to gdc
-;       "push r14\n"
-;       "push r15\n"
-
-;       "shl r8,4\n"  ;we do gcd of the denominators
-;       "add r8, T_INTEGER\n"
-;       "shl r9,4\n"
-;       "add r9, T_INTEGER\n"
-;       "push r8\n"
-;       "push r9\n"         
-;       "push 2\n"
-;       "mov rax, ["(find-label fvar-list 'gcd)"]\n"
-;       "mov rbx,rax\n"
-;       "CLOSURE_ENV rbx\n"
-;       "push rbx\n"
-;       "CLOSURE_CODE rax\n"
-;       "call rax\n"
-;       "add rsp,4*8\n"   ;rax holds gcd of the denominators a & b
-;       "pop r15\n"
-;       "pop r14\n"
-;       "pop r13\n"
-;       "pop r12\n"
-
-;       "shr r8,4\n"
-;       "shr r9,4\n"
-;       "shr rax,4\n"
-
-;       "mov r10,rax\n"   ;r[10] = gcd(a,b)
-;       "mov rax, r8\n"     
-;       "mul r9\n"       ;rax = a*b 
-;       "idiv r10\n"       ;rax = a*b/gcd(a,b) = LCM
-;       "mov r11,rax\n"   ;r11 = LCM
-;       "cqo\n"
-;       "idiv r8\n"
-;       "mul r13\n"
-;       "mov r13,rax\n" ;r13 = LCM/denominator(r13) * numerator(r13) 
-
-;       "mov rax,r11\n"
-;       "cqo\n"
-;       "idiv r9\n"
-;       "mul r14\n"
-;       "mov r14,rax\n" ;r14 = LCM/denominator(r14) * numerator(r14) 
-;       "xor rdx,rdx\n"
-;       "sub r14,r13\n" 
-;       "mov rax, r14\n" ;rax holds the new numerator
-;       "cqo\n"
-;       "idiv r11\n"      ;we divide it by the new denominator
-      
-;       "cmp rdx,0\n"    
-;       "je minus_resIsInt\n" ;after subtraction the result is an integer
-
-;       "mov r14,rdx\n" ;the result is a fraction
-;       "mul r11\n"
-;       "add rax,r14\n"
-;       ;"mov r13,r11\n" ;r13 holds the denominator 
-;       ;"mov r11,rax\n" ;r11 holds the numerator
-;       "mov r9,r11\n" ;r13 holds the denominator 
-;       "mov r8,rax\n" ;r11 holds the numerator
-
-
-;       ;"mov r8,r11\n"
-;       ;"mov r9,r13\n"
-
-;       "push r11\n"
-;       "push r12\n"
-;       "push r13\n"  ;saving before doing call to gdc
-;       "push r14\n"
-;       "push r15\n"
-
-;       "shl r8,4\n"  ;we do gcd of the denominators
-;       "add r8, T_INTEGER\n"
-;       "shl r9,4\n"
-;       "add r9, T_INTEGER\n"
-;       "push r8\n"
-;       "push r9\n"         
-;       "push 2\n"
-;       "mov rax, ["(find-label fvar-list 'gcd)"]\n"
-;       "mov rbx,rax\n"
-;       "CLOSURE_ENV rbx\n"
-;       "push rbx\n"
-;       "CLOSURE_CODE rax\n"
-;       "call rax\n"
-;       "add rsp,4*8\n"   ;rax holds gcd of the denominators a & b
-;       "pop r15\n"
-;       "pop r14\n"
-;       "pop r13\n"
-;       "pop r12\n"
-;       "pop r11\n"
-
-;       "shr r8,4\n"
-;       "shr r9,4\n"
-;       "shr rax,4\n"
-
-;       "mov r10,rax\n"
-
-;       "mov rax,r9\n"
-;       "cqo\n"
-;       "idiv r10\n"
-;       "mov r13,rax\n"
-
-
-;       "mov rax,r8\n"
-;       "cqo\n"
-;       "idiv r10\n"
-;       "mov r11,rax\n"
-
-;       "shl r11,4\n"
-;       "add r11, T_INTEGER\n"
-;       "shl r13,4\n"
-;       "add r13, T_INTEGER\n"
-;       "push rsi\n"
-;       "mov rdi, 16\n"
-;       "call malloc\n"
-;       "test rax, rax\n"
-;       ; "mov rdx, rax\n\n"
-;       "mov qword[rax] , r11\n"
-;       "mov qword[rax+8] , r13\n"
-;       "mov r8, rax\n"
-;       "add rax, 8\n"
-;       "mov r13, rax\n"
-
-;       "MAKE_LITERAL_FRACTION2 r8 , r13\n"
-;       "mov r14,r8 \n"
-;       "inc r12\n" 
-;       "pop rsi\n"  
-;       "jmp minus_loop\n"
-
-;       "minus_resIsInt:\n"
-;       "mov r14,rax\n"
-;       "shl r14,4\n"
-;       "add r14, T_INTEGER\n"
-;       "inc r12\n"   
-;       "jmp minus_loop\n"
-
-;       "minus_finish:\n"
-;       "mov rdi, 8\n"
-;       "call malloc\n"
-;       "test rax, rax\n"
-;       ; "mov rdx, rax\n\n"
-;       "mov qword[rax] , r14\n"
-;       ;"mov rax,r14\n"
-;       "leave\n"
-;       "ret\n"
-
-;       "minus_end:\n"
-;      ; "mov rax,[rax]\n"
-;       "mov [" (find-label fvar-list '-) "], rax\n\n")))
-
-; (define impl-mult
-;     (lambda ()
-;     (string-append
-;       "mov rbp,rsp\n"
-;       "mov rdi, 16\n"
-;       "call malloc\n"
-;       "mov rbx, 1\n"
-;       "MAKE_LITERAL_CLOSURE rax, rbx, mult_code\n"
-;       "jmp mult_end\n"
-
-;       "mult_code:\n\n"
-;       "push rbp\n"
-;       "mov rbp,rsp\n"
-;       "mov r12,0\n"
-;       "mov r14,1\n"   ;r14 holds the sum till now.
-;       "shl r14,4\n"
-;       "add r14, T_INTEGER\n"
-;       "mov r15,[rbp+8*(3+0)]\n" ;arg count
-
-;       "mult_loop:\n"
-
-;       "cmp r12,r15\n"
-;       "je mult_finish\n"
-
-;       "mov r13,[rbp+8*(4+r12)]\n" ;arg
-;       "mov r13,[r13]\n"
-
-;       "mov rdx,r14\n"
-;       "mov rcx,r13\n"
-;       "mov r8,1\n"
-;       "mov r9,1\n"
-;       "mov r10,r13\n"
-;       "mov r11,r14\n"
-;       "TYPE r10\n"
-;       "TYPE r11\n"
-;       "cmp r10, T_FRACTION\n"
-;       "je mult_splitNum2\n"
-      
-;       "mult_second:\n"
-;       "cmp r11, T_FRACTION\n"
-;       "je mult_splitNum1\n"
-;       "jmp mult_after\n"
-
-;       "mult_splitNum2:\n"
-;       "DENOMINATOR rcx\n"
-;       "mov r8,rax\n"      ;r8 hold the DENOMINATOR of r13
-;       "DATA_LOWER r8\n"
-;       "NUMERATOR r13\n"
-;       "mov r13,rax\n"
-;       "jmp mult_second\n"
-
-;       "mult_splitNum1:\n"
-;       "DENOMINATOR rdx\n"
-;       "mov r9,rax\n"      ;r9 hold the DENOMINATOR of r14
-;       "DATA_LOWER r9\n"
-;       "NUMERATOR r14\n"
-;       "mov r14,rax\n"
-
-;       "mult_after:\n"
-;       "shr r13,4\n"
-;       "shr r14,4\n"
-
-;       "mov rax, r13\n"
-;       "mul r14\n"
-;       "mov r13,rax\n" ;r13 = numerator(r14)*numerator(r13) 
-
-;       "mov rax, r8\n"
-;       "mul r9\n"
-;       "mov r11,rax\n" ;r11 = denominator(r14)*denominator(r13)
-;       "cmp r11,1\n"
-;       "je mult_resIsInt\n"
-
-;       "push r11\n"
-;       "push r12\n"
-;       "push r13\n"  ;saving before doing call to gdc
-;       "push r14\n"
-;       "push r15\n"
-
-;       "shl r11,4\n"
-;       "add r11, T_INTEGER\n"
-;       "shl r13,4\n"
-;       "add r13, T_INTEGER\n"
-;       "push r11\n"
-;       "push r13\n"         
-;       "push 2\n"
-;       "mov rax, ["(find-label fvar-list 'gcd)"]\n"
-;       "mov rbx,rax\n"
-;       "CLOSURE_ENV rbx\n"
-;       "push rbx\n"
-;       "CLOSURE_CODE rax\n"
-;       "call rax\n"
-;       "add rsp,4*8\n"   ;rax holds gcd of the denominators a & b
-;       "pop r15\n"
-;       "pop r14\n"
-;       "pop r13\n"
-;       "pop r12\n"
-;       "pop r11\n"
-
-;       "shr rax,4\n"
-
-;       "mov r10,rax\n"   ;r[10] = gcd(a,b)
-;       "mov rax,r13\n"
-;       "div r10\n"
-;       "mov r13,rax\n"
-
-;       "mov rax,r11\n"
-;       "div r10\n"
-;       "mov r11,rax\n"
-
-;       "cmp r11,1\n"
-;       "je mult_resIsInt\n"
-
-
-;     ;   "debug:\n"
-
-;  	  ; "mov r8,r11\n" ;r8 holds the denominator 
-;     ;   "mov r9,r13\n" ;r9 holds the numerator
-
-
-;     ;   ;"mov r8,r11\n"
-;     ;   ;"mov r9,r13\n"
-
-;     ;   "push r11\n"
-;     ;   "push r12\n"
-;     ;   "push r13\n"  ;saving before doing call to gdc
-;     ;   "push r14\n"
-;     ;   "push r15\n"
-
-;     ;   "shl r8,4\n"  ;we do gcd of the denominators
-;     ;   "add r8, T_INTEGER\n"
-;     ;   "shl r9,4\n"
-;     ;   "add r9, T_INTEGER\n"
-;     ;   "push r8\n"
-;     ;   "push r9\n"         
-;     ;   "push 2\n"
-;     ;   "mov rax, ["(find-label fvar-list 'gcd)"]\n"
-;     ;   "mov rbx,rax\n"
-;     ;   "CLOSURE_ENV rbx\n"
-;     ;   "push rbx\n"
-;     ;   "CLOSURE_CODE rax\n"
-;     ;   "call rax\n"
-;     ;   "add rsp,4*8\n"   ;rax holds gcd of the denominators a & b
-;     ;   "pop r15\n"
-;     ;   "pop r14\n"
-;     ;   "pop r13\n"
-;     ;   "pop r12\n"
-;     ;   "pop r11\n"
-
-;     ;   "shr r8,4\n"
-;     ;   "shr r9,4\n"
-;     ;   "shr rax,4\n"
-
-;     ;   "mov r10,rax\n"
-
-;     ;   "mov rax,r9\n"
-;     ;   "cqo\n"
-;     ;   "idiv r10\n"
-;     ;   "mov r13,rax\n"
-
-
-;     ;   "mov rax,r8\n"
-;     ;   "cqo\n"
-;     ;   "idiv r10\n"
-;     ;   "mov r11,rax\n"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;       "shl r13,4\n"
-;       "add r13, T_INTEGER\n"
-;       "shl r11,4\n"
-;       "add r11, T_INTEGER\n"
-
-;       "mov rdi, 16\n"
-;       "call malloc\n"
-;       "test rax, rax\n"
-;       ; "mov rdx, rax\n\n"
-;       "mov qword[rax] , r13\n"
-;       "mov qword[rax+8] , r11\n"
-;       "mov r8, rax\n"
-;       "add rax, 8\n"
-;       "mov r13, rax\n"
-
-;       "MAKE_LITERAL_FRACTION2 r8 , r13\n"
-;       "mov r14,r8 \n"
-;       "inc r12\n"   
-;       "jmp mult_loop\n"
-
-
-;       "mult_resIsInt:\n"
-;       "mov r14,r13\n"
-;       "shl r14,4\n"
-;       "add r14, T_INTEGER\n"
-;       "inc r12\n"   
-;       "jmp mult_loop\n"
-
-
-;       "mult_finish:\n"
-
-;       "mov rdi, 8\n"
-;       "call malloc\n"
-;       "test rax, rax\n"
-;       ; "mov rdx, rax\n\n"
-;       "mov qword[rax] , r14\n"
-
-;       ;"mov rax,r14\n"
-;       "leave\n"
-;       "ret\n"
-
-;       "mult_end:\n"
-;       ;"mov rax,[rax]\n"
-;       "mov [" (find-label fvar-list '*) "], rax\n\n")))
-
-; (define impl-divide
-;     (lambda ()
-;     (string-append
-;       "mov rbp,rsp\n"
-;       "mov rdi, 16\n"
-;       "call malloc\n"
-;       "mov rbx, 1\n"
-;       "MAKE_LITERAL_CLOSURE rax, rbx, divide_code\n"
-;       "jmp divide_end\n"
-
-;       "divide_code:\n\n"
-;       "push rbp\n"
-;       "mov rbp,rsp\n"
-;       "mov r12,0\n"
-;       "mov rsi,1\n"
-;       "mov r15,[rbp+8*(3+0)]\n" ;arg count
-;       "mov r14,[rbp+8*(4+r12)]\n"
-;       "mov r14,[r14]\n"
-
-;       "divide_loop:\n"
-
-;       "cmp r12,r15\n"
-;       "je divide_finish\n"
-
-;       "cmp r15,1\n"
-;       "jne divide_next\n"
-
-;       "mov r13,[rbp+8*(4+r12)]\n" ;if there is only one arg then we do 1/arg
-;       "mov r13,[r13]\n"
-
-;       "mov r14,1\n"
-;       "shl r14,4\n"
-;       "add r14, T_INTEGER\n"
-;       "jmp divide_continue\n"
-
-;       "divide_next:\n"    ;;fix the bug the we do at the end another loop if there are 2 or more args :)
-;       "cmp rsi,r15\n"
-;       "je divide_finish\n"
-
-;       "inc rsi\n"
-
-;       "mov r13,[rbp+8*(5+r12)]\n" ;arg
-;       "mov r13,[r13]\n"
-
-;       "divide_continue:"
-;       "mov rdx,r14\n"
-;       "mov rcx,r13\n"
-;       "mov r8,1\n"
-;       "mov r9,1\n"
-;       "mov r10,r13\n"
-;       "mov r11,r14\n"
-;       "TYPE r10\n"
-;       "TYPE r11\n"
-;       "cmp r10, T_FRACTION\n"
-;       "je divide_splitNum2\n"
-      
-;       "divide_second:\n"
-;       "cmp r11, T_FRACTION\n"
-;       "je divide_splitNum1\n"
-;       "jmp divide_after\n"
-
-;       "divide_splitNum2:\n"
-;       "DENOMINATOR rcx\n"
-;       "mov r8,rax\n"      ;r8 hold the DENOMINATOR of r13
-;       "DATA_LOWER r8\n"
-;       "NUMERATOR r13\n"
-;       "mov r13,rax\n"
-;       "jmp divide_second\n"
-
-;       "divide_splitNum1:\n"
-;       "DENOMINATOR rdx\n"
-;       "mov r9,rax\n"      ;r9 hold the DENOMINATOR of r14
-;       "DATA_LOWER r9\n"
-;       "NUMERATOR r14\n"
-;       "mov r14,rax\n"
-
-;       "divide_after:\n"
-;       "sar r13,4\n"
-;       "sar r14,4\n"
-
-;       "mov rax, r13\n"
-;       "imul r9\n"
-;       "mov r11,rax\n" ;r11 = denominator(r14)*numerator(r13)
-
-;       "mov rax, r8\n"
-;       "imul r14\n"
-;       "mov r13,rax\n" ;r13 = numerator(r14)*denominator(r13) 
-
-;       "cmp r11,1\n"
-;       "je divide_resIsInt\n"
-
-;       "push r11\n"
-;       "push r12\n"
-;       "push r13\n"  ;saving before doing call to gdc
-;       "push r14\n"
-;       "push r15\n"
-
-;       "shl r11,4\n"
-;       "add r11, T_INTEGER\n"
-;       "shl r13,4\n"
-;       "add r13, T_INTEGER\n"
-;       "push r11\n"
-;       "push r13\n"         
-;       "push 2\n"
-;       "mov rax, ["(find-label fvar-list 'gcd)"]\n"
-;       "mov rbx,rax\n"
-;       "CLOSURE_ENV rbx\n"
-;       "push rbx\n"
-;       "CLOSURE_CODE rax\n"
-;       "call rax\n"
-;       "add rsp,4*8\n"   ;rax holds gcd of the denominators a & b
-;       "pop r15\n"
-;       "pop r14\n"
-;       "pop r13\n"
-;       "pop r12\n"
-;       "pop r11\n"
-
-;       "sar rax,4\n"
-
-;       "mov r10,rax\n"   ;r[10] = gcd(a,b)
-;       "mov rax,r13\n"
-;       "idiv r10\n"
-;       "mov r13,rax\n"
-
-;       "mov rax,r11\n"
-;       "idiv r10\n"
-;       "mov r11,rax\n"
-
-;       "cmp r11,1\n"
-;       "je divide_resIsInt\n"
-
-;       "shl r13,4\n"
-;       "add r13, T_INTEGER\n"
-;       "shl r11,4\n"
-;       "add r11, T_INTEGER\n"
-
-;       "push rsi\n"
-;       "mov rdi, 16\n"
-;       "call malloc\n"
-;       "test rax, rax\n"
-;       ; "mov rdx, rax\n\n"
-;       "mov qword[rax] , r13\n"
-;       "mov qword[rax+8] , r11\n"
-;       "mov r8, rax\n"
-;       "add rax, 8\n"
-;       "mov r13, rax\n"
-
-;       "MAKE_LITERAL_FRACTION2 r8 , r13\n"
-;       "mov r14,r8 \n"
-;       "inc r12\n"   
-;       "pop rsi\n"
-;       "jmp divide_loop\n"
-
-
-;       "divide_resIsInt:\n"
-;       "mov r14,r13\n"
-;       "shl r14,4\n"
-;       "add r14, T_INTEGER\n"
-;       "inc r12\n"   
-;       "jmp divide_loop\n"
-
-;       "divide_finish:\n"
-
-;       "mov rdi, 8\n"
-;       "call malloc\n"
-;       "test rax, rax\n"
-;       ; "mov rdx, rax\n\n"
-;       "mov qword[rax] , r14\n"
-
-;       ;"mov rax,r14\n"
-;       "leave\n"
-;       "ret\n"
-
-;       "divide_end:\n"
-;       ;"mov rax,[rax]\n"
-;       "mov [" (find-label fvar-list '/) "], rax\n\n")))
 
 (define impl-cons
   (lambda ()
@@ -4703,14 +3502,12 @@ repair-stack1":\n"
       "mov rdi, 8\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov qword[rax] , r14\n"
 
       "leave\n"
       "ret\n"
 
       "cons_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'cons) "], rax\n\n")))
 
 (define impl-integer_to_char
@@ -4742,14 +3539,12 @@ repair-stack1":\n"
       "mov rdi, 8\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov qword[rax] , r14\n"
 
       "leave\n"
       "ret\n"
       
       "integer_to_char_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'integer->char) "], rax\n\n")))
 
 (define impl-char_to_integer
@@ -4780,14 +3575,12 @@ repair-stack1":\n"
       "mov rdi, 8\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov qword[rax] , r14\n"
 
       "leave\n"
       "ret\n"
       
       "char_to_integer_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'char->integer) "], rax\n\n")))
 
 (define impl-symbol_to_string ;not working!!!!!!!!!!!!!!!
@@ -4823,14 +3616,12 @@ repair-stack1":\n"
       "mov rdi, 8\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov qword[rax] , r14\n"
 
       "leave\n"
       "ret\n"
       
       "symbol_to_string_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'symbol->string) "], rax\n\n")))
 
 (define impl-string_to_symbol
@@ -4879,13 +3670,6 @@ repair-stack1":\n"
       "mov r13, r15\n"
       "mov r14, [sym_table]         ;symi\n"
 
-      ;"mov rdi,16                   ;create pair\n"
-      ;"call malloc\n"
-      ;"mov qword[rax] , r15\n"
-      ;"mov qword[rax+8] ,r14\n"
-      ;"mov r15, rax\n"
-      ;"mov r14, rax\n"
-      ;"add r14, 8\n"
           "MAKE_LITERAL_PAIR2 r15 ,r14\n\n"
 
           "mov rdi,8\n"
@@ -4899,119 +3683,7 @@ repair-stack1":\n"
       "ret\n\n"
 
       "lable_end_string_to_symbol:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'string->symbol) "], rax\n\n")))
-
-
-; (define impl-string_to_symbol ;not working!!!!!!!!!!!!!!!
-;    (lambda ()
-;     (string-append
-
-;       "mov rbp,rsp\n"
-;       "mov rdi, 16\n"
-;       "call malloc\n"
-;       "mov rbx, 1\n"
-;       "MAKE_LITERAL_CLOSURE rax, rbx, string_to_symbol_code\n"
-;       "jmp string_to_symbol_end\n"
-      
-;       "string_to_symbol_code:\n"
-;       ; "find_symbol_code:\n\n"
-;       "push rbp\n"
-;       "mov rbp,rsp\n"
-
-;       "mov r14,[rbp+8*(4+0)]\n" ;arg 0
-
-
-;       "mov r15, [sym_table]\n"
-;       "mov r15, [r15]\n"
-;       "mov r13,r15\n"
-;       "TYPE r13\n"
-;       "cmp r13 , T_PAIR\n"
-;       "jne isNil\n"
-;       "find_symbol__loop:\n"
-
-;        "mov r10, r15\n"
-;        "mov r11, r10\n"
-;        "GET_SYMBOL r11\n"
-;        "CAR r10\n"            ; r15 <- car (symbol)
-;        ; "mov r13 , [r10]\n"   ;;;;;;;;;;;;;;;;;;;;;;;;;???
-;        "SYMBOL_NAME rcx , r10\n" ;
-
-;        ; "mov r13, [rcx]\n"        ; hold name
-;        "cmp r14 , rcx\n"
-;        "je find_symbol_found\n"
-;        "CDR r15\n"
-;        "cmp r15, SOB_NIL\n"
-;        "je isNil\n"
-
-;        "jmp find_symbol__loop\n"
-
-;        "find_symbol_found:\n"
-;        "mov qword rax, r11\n"
-;        "jmp find_symbol_end\n"
-
-;       "isNil:\n"
-;       "mov r15, [sym_table]\n"
-;       "mov r15, [r15]\n"          ; first pair in the list
-
-
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
-;       "mov rdi, 8\n"
-;       "call malloc\n"
-;       "test rax, rax\n"
-;       "MAKE_LITERAL_SYMBOL2 rax , r14\n"
-;        "mov r14, rax\n"
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; r14 hold new symbol
-
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;       "mov r15, [sym_table]\n"
-;      "mov r15, [r15]\n"
-
-;       "mov rdi, 16\n"
-;       "call malloc\n"
-;       "test rax, rax\n"
-
-;       "mov qword[rax] , r14\n"      ; car
-;       "mov qword[rax+8] , r15\n"    ; cdr  
-;       "mov r8, rax\n"
-;       "add rax, 8\n"
-;       "mov r13, rax\n"
-
-
-;       ; "pop rcx\n"
-;       "MAKE_LITERAL_PAIR2 r8, r13\n"
-
-;       "mov r13, r8\n"
-
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; r13 hold new list
-;       "mov rdi, 8\n"
-;       "call malloc\n"
-;       "test rax, rax\n"
-;       "mov qword [rax], r13\n"
-;       "mov [sym_table] , r13\n"
-;       "mov rax, r14\n"
-;       "jmp find_symbol_end\n"
-
-;       ; "find_symbol_found:\n"
-
-;       ; ; "shl r15 , 4\n"
-;       ; ; "or r15, T_INTEGER\n"
-;       ; ; "mov rdi, 8\n"
-;       ; ; "call malloc\n"
-;       ; ; "test rax, rax\n"
-;       ; ; "mov rdx, rax\n\n"
-;       ; "mov qword[rax] , r10\n"
-
-;       "find_symbol_end:\n"
-
-;       "leave\n"
-;       "ret\n"
-
-;       "string_to_symbol_end:\n"
-
-;       ;"mov rax,[rax]\n"
-;       "mov [" (find-label fvar-list 'string->symbol) "], rax\n\n")))
-
 
 (define impl-length
   (lambda ()
@@ -5054,14 +3726,12 @@ repair-stack1":\n"
       "mov rdi, 8\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov qword[rax] , r15\n"
 
       "leave\n"
       "ret\n"
 
       "length_end:\n"
-      ;"mov rax,[rax]\n"
       "mov [" (find-label fvar-list 'meirlength) "], rax\n\n")))
 
 (define my-list
@@ -5085,7 +3755,7 @@ repair-stack1":\n"
   (lambda(n)
     (or (eq? n #t)(eq? n #f))))
 
-(define my-append   ;VARIADIC????
+(define my-append   ;not variadic
   (lambda(r s)
     (if (null? r) 
       s
@@ -5129,8 +3799,6 @@ repair-stack1":\n"
     
 (define code-gen   
   (lambda (exp major clist flist)
-  	  		 ; (newline)(display "code gen:: ")(display exp)(newline)
-  			 ; (newline)(display "exp: ")(display exp)(newline)
 
   (let* ((case (car exp))
          (case-seq (cadr exp)))
@@ -5212,7 +3880,6 @@ repair-stack1":\n"
           (map 
               (lambda(e)
                (string-append (code-gen e 0 const-list fvar-list) "\n")) (pipeline (file->list "project/meir-func.scm")))))
-        		; "mov [" (find-label fvar-list 'plus) "], rax\n\n"
 
         	
         )
@@ -5239,16 +3906,11 @@ repair-stack1":\n"
    		(my-assembly-code   (string-append assm-ctable assm-ftable (build-sym-table-assembly sym-list) "section .text\nmain:\npush rbp\n" (lib-func) (scheme-lib-func) generated-lines1  "add rsp, 1*8\n ret\n"))
    		(assembly-code (string-append (list->string(file->list "project/scheme.s"))  my-assembly-code) )
    		)
-    	; (display assm-ctable )
-    	; (display assm-ftable )
-    	; (display generated-lines)
-    	; (display my-assembly-code)
     	(string->file target assembly-code)
     	)	
 
     )
  )
-
 
 
 ; (compile-scheme-file "inon.scm" "inon.s" )
