@@ -35,12 +35,8 @@
 
 (define contains
   (lambda (lst x)
-      ; (newline)(display "X: ")(display x)(newline)
-
     (fold-left (lambda (acc x) (or acc x)) #f (map (lambda (p) (equal? x (cadr p) )) lst) )
     ))
-
-
 
 
 (define list->set
@@ -73,9 +69,6 @@
 
 (define separate-list 
 	(lambda (p) 
-	; (newline)(display "separate-list -P: ")(display  p)(newline)
-
-
 		(cond  
 			((vector? p)(separate-vector (vector->list p)))
 			((pair? p)
@@ -101,9 +94,7 @@
 
 (define separate-vector 
 	(lambda (p v) 
-    ; (newline)(display "separate-vector -P: ")(display p)(newline)
-    ; (newline)(display "separate-vector -V: ")(display v)(newline)
-     (set! const-list (cons v const-list))
+	     (set! const-list (cons v const-list))
 		 (map (lambda(p1) (if (vector? p1) (separate-vector (vector->list p1) p1) (separate-list p1))) p)
 ))
 
@@ -124,23 +115,14 @@
 (define const-list (cons #t (cons #f (cons '() (cons (void) '())))))
 (define sym-names-list '())
 
-
-
-;(define fvar-list '())
-
 (define make-const-table
 	(lambda (exp)
-		 ; (newline)(display "exp-const: ")(display exp)(newline)
 		(cond 
       ((or(null? exp)(not(list? exp))   (and (equal? (car exp) 'const)(equal? (cadr exp) (void)))  ) '())
       ((equal? (car exp) 'const)  
       		(let ((const-val (cadr exp)))
-                 ; (newline)(display "const: ")(display const-val)(newline)
-                 ; (newline)(display "is_int:: ")(display (integer? (/ (numerator const-val) (denominator const-val))))(newline)
-
       			(cond ((pair? const-val) (separate-list const-val))
 
-                ; ((string? const-val)  (set! const-list (cons const-val const-list)))
               ((symbol? const-val)  (set! const-list (cons (symbol->string const-val) (cons const-val const-list))))
 
 
@@ -153,7 +135,6 @@
       		 ))
       ((equal? (car exp) 'fvar) 
       	(let ((fvar-val (cadr exp)))
-          ;(display "meirrrr")
       			(set! fvar-list (cons fvar-val fvar-list))
       		 )
       ) 
@@ -167,13 +148,10 @@
        ((equal? (car exp) 'lambda-simple)
           (let* ((body (cddr exp))
                 (params (cadr exp)))
-          ; (newline)(display "lambda-simple")(newline)
                 (cond ((equal? (caar body) 'seq)
                     (let* ((expr1 (cadar body))
                          (expr2 (cddar body))
                          )
-                    	; (newline)(display "lambda-simple")(newline)
-                    	; (newline)(display "expr2: ")(display expr2)(newline)
                       (if(null? expr2)  
                       	(map (lambda (e) (make-const-table e)) expr1)
                         (list (map (lambda (e) (make-const-table e)) expr1)
@@ -194,8 +172,6 @@
        ((or (equal? (car exp) 'applic) (equal? (car exp) 'tc-applic))
           (let* ((proc (cadr exp))
                 (args (caddr exp)))
-          	; (newline)(display "PROC: ")(display proc)(newline)
-          	;  (newline)(display "ARGS: ")(display args)(newline)
             (list (make-const-table proc) (map (lambda (arg)(make-const-table arg)) args ))
        ))
        ((equal? (car exp) 'define)
@@ -242,8 +218,6 @@
 
 (define str-fraction
   (lambda (label val)
-         ; (newline)(display "str-fraction: ")(display  val)(newline)
-     ; (newline)(display "lst: ")(display (car lst))(newline)
     (let* ((val-numerator (numerator val) ) 
           (val-denomerator (denominator val))
           (val-gcd (gcd val-numerator val-denomerator))
@@ -272,26 +246,13 @@
 
 (define find-label
 	(lambda (lst v) 
-	  ; (newline)(display "find label::")
-		 ; (newline)(display "v: ")(display v)
-     ; (newline)(display "symbol_v: ")(display (symbol? v))(newline)
-     ; (newline)(display "lst: ")(display lst)(newline)
 
 		(let ((label (caar lst))
 			  (val (cadar lst)))
-      ; (newline)(display "val: ")(display val)(newline)
-      ; (newline)(display "symbol_val: ")(display (symbol? val))(newline)
-      ; (newline)(display "(or(eq? val v) (equal? val v)) = ")(display (or(eq? val v) (equal? val v)))(newline)
-
 			(if (or(eq? val v) (equal? val v)) label
 				(find-label (cdr lst) v))
 			)
 ))
-; (define build-sym-table-assembly-in-one-line
-;   (lambda()
-;     (string-append "sym-list: dq " (fold-left (lambda (acc x) (string-append acc "MAKE_LITERAL_PAIR(" (find-label const-list x) ", "  )) "" 
-;        sym-list) "SOB_NIL" (make-string (length sym-list) #\) )    "\n"   )
-;     ))
 
 (define clean-string-from-special
   (lambda (str acc last_special)
@@ -334,9 +295,6 @@
   (lambda(sym-lst)
 
      (letrec ((loop (lambda (lst index)
-      ;  (newline)(display "lst: ")(display lst)(newline)
-       ;         (newline)(display "index: ")(display index)(newline)
-
                          (cond  ((null? lst) "")
                                 ((if (= index 0 ) (string-append "sym" (number->string index) ": dq MAKE_LITERAL_PAIR("(car lst) "," (find-label const-list '())")\n" (loop (cdr lst) (+ 1 index)))
                                           (string-append "sym" (number->string index) ": dq MAKE_LITERAL_PAIR("(car lst) ", sym" (number->string (- index 1) ) ")\n" (loop (cdr lst) (+ 1 index)) ) )
@@ -347,15 +305,11 @@
 
 (define build-const-table-assembly 
 	(lambda (lst)
-		; (newline)(display "!!!!!!!!!!!!! : ")(display const-list)(newline)
-
     (string-append "\nsection .data\nstart_of_data:\n" (fold-left (lambda (acc x) (string-append acc "\n" x)) "" 
 			(map (lambda (x)
 
 				(let ((label (car x))
 					  (val (cadr x))) 
-            ; (newline)(display "val-asm : ")(display val)(newline)
-
 				(cond ((equal? (void) val) (string-append label ": dq SOB_VOID "  ))
 					  ((number? val) (if (integer? val) 
 									  (string-append label ": dq MAKE_LITERAL(T_INTEGER, " (number->string val) ")" )
@@ -371,7 +325,6 @@
 					  ((vector? val) (if ( = (vector-length val) 0)(string-append label ": dq MAKE_LITERAL(T_VECTOR,0)\n") (string-append label ": MAKE_LITERAL_VECTOR " 
               (let ((my_list(fold-right (lambda (acc x) (string-append acc "," x)) ""  (map (lambda(v) (find-label const-list v))  (vector->list val)  ))))
 					  			(if(equal? "" my_list) my_list (substring  my_list 0 (- (string-length my_list) 1)))
-					  		;(display "VVVV")(newline)(display my_list)(newline)
 					  		))))
 					  (else "\n")
 					
@@ -401,16 +354,11 @@
       "mov qword [rbp+(4+"(number->string mi)")*8] , rax\n"
       "mov rax, " (find-label clist (void)) "\n"))))
 
-
-;;;;;;;;;;you need to change mi ang ma;;;;;;;;;;;;;;;;;;;;;;;;
 (define gen-code-set-bvar
     (lambda (var val major clist flist)
       (let* ((gen-val (code-gen val major clist flist))
              (ma  (caddr var))
              (mi  (cadddr var)))
-      ; (newline)(display "Var ")(display var)(newline)
-      ; (newline)(display "mi ")(display mi)(newline)
-      ; (newline)(display "ma ")(display ma)(newline)
      (string-append 
         gen-val "\n"
 
@@ -422,7 +370,6 @@
   (define gen-code-set-fvar
     (lambda (var val major clist flist)
       (let* ((gen-val (code-gen val major clist flist)))
-      ;(newline)(display "set-favr: ")(display var)(newline)
 
      (string-append 
       gen-val "\n"
@@ -432,28 +379,15 @@
 
 (define gen-code-set
     (lambda (exp major clist flist)
-      ; (newline)(display "set: ")(display exp)(newline)
-      ; (newline)(display "val: ")(display (caddr exp))(newline)
-      ; (newline)(display "var: ")(display (cadr exp))(newline)
-      ; (newline)(display (pair? (cadr exp)))(newline)
       (let* ((var (cadr exp))
            (val (caddr exp))
            (pvar? (equal? 'pvar (car var)))
            (bvar? (equal? 'bvar (car var))))
-           
-       ; (newline)(display "Var1 ")(display var)(newline)
-       ; (newline)(display "Val1 ")(display val)(newline)
-       ; (newline)(display "pvar?1 ")(display pvar?)(newline)
+
       (cond  (pvar? (gen-code-set-pvar var val major clist flist ))
                 (bvar? (gen-code-set-bvar var val major clist flist ))
                 (else (gen-code-set-fvar var val major clist flist )))
       )))
-; (string-append
-;                       (code-gen val major clist flist) "\n"
-;                       "mov [" (find-label flist (cadr var))"], rax \n" 
-;                       "mov  rax , SOB_VOID"))))
-
-
 
 (define gen-code-box
     (lambda (exp major clist flist)
@@ -488,15 +422,11 @@
         "mov rax, SOB_VOID\n\n"
          ))))
 
-
-
-
 (define gen-code-define
     (lambda (exp major clist flist)
       (let* ((var (cadr exp))
       		 (val (caddr exp)))
-      ; (newline)(display "Var ")(display var)(newline)
-      ; (newline)(display "Val ")(display val)(newline)
+
       (string-append
           (code-gen val major clist flist) "\n"
           "mov [" (find-label flist (cadr var))"], rax \n" 
@@ -509,10 +439,6 @@
         (symbol? val)
       (string-append "mov rax, " (find-label clist val) "\n" ))))
 
-
-
-
-
 (define gen-code-fvar
     (lambda ( exp major clist flist)
       (let* ((val (cadr exp)))
@@ -520,35 +446,23 @@
 
 (define gen-code-pvar
     (lambda ( exp major clist flist)
-      ; (newline)(display "exp-pvar: ")(display exp)(newline)
       (let* ((val (cadr exp))
              (mi  (caddr exp)))
-       ; (newline)(display "val: ")(display val)(newline)
-       ; (newline)(display "mi: ")(display mi)(newline)
       (string-append "mov rax, qword [rbp + (4+" (number->string mi) ")*8]" ))))
-
-
 
 (define gen-code-bvar
     (lambda ( exp major clist flist)
-      ; (newline)(display "exp: ")(display exp)(newline)
       (let* ((val (cadr exp))
              (ma  (caddr exp))
              (mi  (cadddr exp)))
-       ; (newline)(display "val: ")(display val)(newline)
-       ; (newline)(display "mi: ")(display mi)(newline)
       (string-append 
         "mov rax, qword [rbp + 2*8]\n" ;env
         "mov rax, qword [rax + " (number->string  ma) "*8]\n" ;env[ma]
-        "mov rax, qword [rax +" (number->string mi) "*8]\n"  ;env[ma][mi] 
-        
+        "mov rax, qword [rax +" (number->string mi) "*8]\n"  ;env[ma][mi]         
       ))))
-
-
 
 (define gen-code-if3
     (lambda (exp major clist flist)
-    	; (newline)(display "exp: ")(display exp)(newline)
         (let* ((dtest (cadr exp))
                (dthen (caddr exp))
                (delse (cadddr exp))
@@ -597,10 +511,6 @@
 
 (define gen-code-applic 
     (lambda (exp major clist flist)
-        ; (newline)(display "cadr exp: ")(display (cadr exp))(newline)
-        ; (newline)(display "caddr exp: ")(display (caddr exp))(newline)
-        ; ; (newline)(display "exp: ")(display exp)(newline)
-        ; (newline)(display "exp: ")(display exp)(newline)
         (let* ((op (cadr exp))
               (args (caddr exp)) 
               (gen-op (code-gen op major clist flist))
@@ -625,22 +535,12 @@
                 "add rbx, 2\n"
                 "shl rbx , 3\n"
                 "add rsp, rbx\n"
-                ; "add rsp,"(number->string (+ args-length 3)) "*8\n"
-
                 )
-
         )
-
          )) 
-
-
 
 (define gen-code-tc-applic 
     (lambda (exp major clist flist)
-        ; (newline)(display "cadr exp: ")(display (cadr exp))(newline)
-        ; (newline)(display "caddr exp: ")(display (caddr exp))(newline)
-        ; ; (newline)(display "exp: ")(display exp)(newline)
-        ; (newline)(display "exp: ")(display exp)(newline)
         (let* ((op (cadr exp))
               (args (caddr exp)) 
               (gen-op (code-gen op major clist flist))
@@ -683,16 +583,10 @@
                 "ja "repair-stack1"\n" 
                 "sub r15, r14\n" 
                 "add rsp , r15\n"
-                ; "add rbp , r15\n"
-
 
                 "jmp rax\n"
-                ; "add rsp,"(number->string (+ args-length 3)) "*8\n"
-
                 )
-
         )
-
          ))
 
 (define gen-code-lambda-opt
@@ -715,10 +609,6 @@
            (opt (caddr exp))
            (body (cadddr exp))
            (params-length (number->string (length params))))    ;the string n
-      ;(newline)(newline)(display "params: ")(display params)(newline)
-      ;(display "opt: ")(display opt)(newline)
-     ; (newline)
-
 
       (string-append  "\n"
       inon-label ":\n"
@@ -803,8 +693,6 @@
       "push rbp\n"
       "mov rbp,rsp\n"
       
-
-
       "mov r14, [rbp +3*8]\n"    ; r114<- number of params on stack
       "mov r13, r14\n"            
       "add r13, 3\n"
@@ -816,15 +704,12 @@
       "je "no-opt-params "\n"
       "mov r15 , 0\n"
       "mov r13 , ["(find-label const-list '())"]\n"
-      ; "push rcx\n"
       opt-loop ":\n"
       
-      ; "mov r15, [r8]\n"
 
       "mov rdi, 16\n"
       "call malloc\n"
       "test rax, rax\n"
-      ; "mov rdx, rax\n\n"
       "mov r11, [r12]\n"
       "mov r11, [r11]\n"
       "mov qword[rax] , r11\n"
@@ -834,12 +719,9 @@
       "mov r13, rax\n"
 
 
-      ; "pop rcx\n"
       "MAKE_LITERAL_PAIR2 r8, r13\n"
 
       "mov r13, r8\n"
-      ; "push rbx\n"
-      ; "call write_sob_if_not_void\n"
       
       "inc r15\n"
       "sub r12, 1*8\n"
@@ -877,7 +759,6 @@
       "mov r12, [rbp+ 3*8]\n"
       "mov qword [rbp +3*8] , r9 \n"
 
-
       "mov r15, r12\n" 
       "add r15, 3\n"
       "shl r15, 3\n"
@@ -887,7 +768,6 @@
       "sub r13 , rbp\n"
       "shr r13 , 3\n"
       "add r13, 1\n"
-
 
 repair-stack1":\n"
 "mov r11,[r14]\n"              ;r11 <- the value to move
@@ -926,21 +806,15 @@ repair-stack1":\n"
       "mov r14,"(find-label const-list '())"\n"
       "mov qword [r15], r14\n"
 
-
-
       cont":\n"
       (code-gen body (+ 1 major) clist flist) "\n"
       ; [[body]]
       "pop rbp\n"
       "ret\n"
       lambda-label4":\n"
-      ; "mov rax, [rax]\n"
       
       ))
     ))
-
-
-
 
 (define gen-code-lambda-simple
   (lambda(exp major clist flist)
@@ -954,13 +828,8 @@ repair-stack1":\n"
            (params (cadr exp))
            (body (caddr exp))
            (params-length (number->string (length params))))    ;the string n
-
-      ; (newline)(newline)(display "params: ")(display params)(newline)
-      ; (display "body: ")(display body)(newline)
-      ; (newline)
       (string-append  "\n"
       inon-label ":\n"
-      ; "mov rbp,rsp\n"
       (if (= 0 major) "xor rbx,rbx\n"
       (string-append
       "mov rdi, 8*" (number->string (+ 1 major)) "\n"   ;rbx = malloc(8*(m+1)) env
@@ -1059,7 +928,6 @@ repair-stack1":\n"
       "pop rbp\n"
       "ret\n"
       lambda-label4":\n"
-      ; "mov rax, [rax]\n"
     ))
     ))
 
@@ -1071,7 +939,6 @@ repair-stack1":\n"
     	 (append (reverse (cdr lst)) (list (car lst))))
   )
 )
-
 
 (define impl-apply
   (lambda ()
@@ -1110,8 +977,7 @@ repair-stack1":\n"
       "push rbx\n"
       "CLOSURE_CODE rax\n"
       "call rax\n"
-      "add rsp,3*8\n"   ;????????????? 3 or 4 ??????????
-
+      "add rsp,3*8\n"   
       "pop r15\n"
       "pop r14\n"
       "pop r13\n"
@@ -1122,10 +988,7 @@ repair-stack1":\n"
 
       ;;;;;;;;;;;;;;;;;;;;;;; rax hold the length of the list
       "mov rax , [rax]\n"
-      ;"mov rax, 3\n"
       "DATA_LOWER rax\n"
-      ;"cmp rax,0\n"
-      ;"je apply_after_loop\n"
 
       "cmp rax, 0\n"              ; check if length is 0 => '()
       "je no_args_to_apply\n"
@@ -1157,14 +1020,7 @@ repair-stack1":\n"
       "no_args_to_apply:\n"
       "push 0\n"
 
-      ; "apply_after_loop:\n"
-      ; "mov r10 , rsp\n"
-      ; "push rax\n"
-      ; ;"sub rsp,8\n"
-
-
               "apply_continue:\n"
-                ; "mov rax, [rax]\n"
                 "mov rax, r14\n"
                 "mov rbx,rax\n"
                 "CLOSURE_ENV rbx\n"  
